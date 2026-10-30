@@ -1,13 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import catalog from "@/data/task1-service-explorer.json";
+import { useEffect, useMemo, useState } from "react";
 
 type Category = { id: string; title: string; type: string; status: boolean };
 type Provider = { id: number; name: string; status: string; providerInformation: { city: { name: string }; currency: string; rating: number | null } };
 type Service = { id: string; title: string; type: string; userId: number; categoryId: string; price: string | null; discount: string | null; discountType: "amount" | "percent" | null; status: boolean; testAtHome: boolean; wellnessPricing: { durationInMinutes: number; price: string; discount: string; discountType: "amount" | "percent" }[] };
 
-const data = catalog as unknown as { categories: Category[]; providers: Provider[]; services: Service[] };
+type CatalogData = { categories: Category[]; providers: Provider[]; services: Service[] };
 
 const label: Record<string, string> = { package: "Health package", lab_test: "Lab test", service: "Treatment", wellness: "Wellness", insurance: "Insurance" };
 const priceOf = (service: Service) => Number(service.price ?? service.wellnessPricing[0]?.price ?? 0);
@@ -27,20 +26,41 @@ export default function ServiceExplorer() {
   const [homeOnly, setHomeOnly] = useState(false);
   const [sort, setSort] = useState("recommended");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [catalog, setCatalog] = useState<CatalogData | null>(null);
+  const [loadError, setLoadError] = useState(false);
 
-  const providers = useMemo(() => new Map(data.providers.filter((item) => item.status === "active").map((item) => [item.id, item])), []);
-  const categories = useMemo(() => data.categories.filter((item) => item.status), []);
+  const providers = useMemo(() => new Map((catalog?.providers ?? []).filter((item) => item.status === "active").map((item) => [item.id, item])), [catalog]);
+  const categories = useMemo(() => (catalog?.categories ?? []).filter((item) => item.status), [catalog]);
   const locations = useMemo(() => Array.from(new Set([...providers.values()].map((item) => item.providerInformation.city.name))).sort(), [providers]);
   const results = useMemo(() => {
     const term = query.toLowerCase().trim();
-    return data.services.map((service) => ({ service, provider: providers.get(service.userId), category: categories.find((item) => item.id === service.categoryId) }))
+    return (catalog?.services ?? []).map((service) => ({ service, provider: providers.get(service.userId), category: categories.find((item) => item.id === service.categoryId) }))
       .filter((item) => item.service.status && item.provider && item.category)
       .filter(({ service, provider, category }) => (!term || [service.title, provider!.name, category!.title].some((value) => value.toLowerCase().includes(term))) && (categoryId === "all" || service.categoryId === categoryId) && (location === "all" || provider!.providerInformation.city.name === location) && priceOf(service) <= maxPrice && (!homeOnly || service.testAtHome))
       .sort((a, b) => sort === "price-low" ? salePrice(a.service) - salePrice(b.service) : sort === "price-high" ? salePrice(b.service) - salePrice(a.service) : (b.provider!.providerInformation.rating ?? 0) - (a.provider!.providerInformation.rating ?? 0));
-  }, [categories, categoryId, homeOnly, location, maxPrice, providers, query, sort]);
+  }, [catalog, categories, categoryId, homeOnly, location, maxPrice, providers, query, sort]);
 
   const reset = () => { setQuery(""); setCategoryId("all"); setLocation("all"); setMaxPrice(50000); setHomeOnly(false); setSort("recommended"); };
   const activeFilters = Number(categoryId !== "all") + Number(location !== "all") + Number(maxPrice !== 50000) + Number(homeOnly);
+
+  useEffect(() => {
+    let isCurrent = true;
+    Promise.all(["categories", "providers", "services"].map(async (resource) => {
+      const response = await fetch(`/api/${resource}`);
+      if (!response.ok) throw new Error(`Unable to load ${resource}`);
+      return response.json();
+    }))
+      .then(([categories, providers, services]) => {
+        if (isCurrent) setCatalog({ categories, providers, services });
+      })
+      .catch(() => {
+        if (isCurrent) setLoadError(true);
+      });
+    return () => { isCurrent = false; };
+  }, []);
+
+  if (!catalog && !loadError) return <main className="explorer-shell"><section className="explorer-hero"><div className="explorer-container hero-copy"><span className="eyebrow">MEDICAL SERVICES, MADE SIMPLE</span><h1>Finding the right care for you…</h1></div></section></main>;
+  if (loadError) return <main className="explorer-shell"><section className="explorer-hero"><div className="explorer-container hero-copy"><span className="eyebrow">SERVICE EXPLORER</span><h1>We couldn&apos;t load the service catalog.</h1><button className="popular-searches" onClick={() => window.location.reload()}>Try again</button></div></section></main>;
 
   return <main className="explorer-shell">
     <section className="explorer-hero"><div className="explorer-container hero-copy">
