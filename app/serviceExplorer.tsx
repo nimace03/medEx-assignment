@@ -2,18 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { urls } from "@/utils/urls";
-import { CatalogData, Service } from "./types";
-
-
-const label: Record<string, string> = { package: "Health package", lab_test: "Lab test", service: "Treatment", wellness: "Wellness", insurance: "Insurance" };
-const priceOf = (service: Service) => Number(service.price ?? service.wellnessPricing[0]?.price ?? 0);
-const salePrice = (service: Service) => {
-  const price = priceOf(service);
-  const discount = Number(service.discount ?? service.wellnessPricing[0]?.discount ?? 0);
-  const type = service.discountType ?? service.wellnessPricing[0]?.discountType;
-  return type === "percent" ? price * (1 - discount / 100) : Math.max(0, price - discount);
-};
-const money = (value: number, currency: string) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(value);
+import { CatalogData } from "./types";
+import { priceOf, salePrice } from "./utils";
 
 export default function ServiceExplorer() {
   const [query, setQuery] = useState("");

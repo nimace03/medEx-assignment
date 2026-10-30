@@ -2,16 +2,8 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { urls } from "@/utils/urls";
-import { Group, LocalItem } from "./types";
-
-const groupNames: Record<string, string> = { lab_test: "Laboratory tests", wellness: "Wellness appointments", package: "Health packages", service: "Medical services", unknown: "Needs attention" };
-const icons: Record<string, string> = { lab_test: "⌁", wellness: "✦", package: "♡", service: "✚", unknown: "!" };
-
-const format = (amount: number, currency: string) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(amount);
-const itemPrice = (item: LocalItem) => {
-  if (typeof item.product.price === "number") return item.product.price;
-  return item.product.wellnessPricing?.find((price) => price.id === item.selectedPricingId)?.amount_after_service_charge ?? null;
-};
+import { Group } from "./types";
+import { format, groupNames, icons, itemPrice } from "./utils";
 
 export default function CartCheckout() {
   const [groups, setGroups] = useState<Group[] | null>(null);

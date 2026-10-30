@@ -2,12 +2,8 @@
 
 import { urls } from "@/utils/urls";
 import { useEffect, useMemo, useState } from "react";
-import { Provider, BookingData } from "./types";
-
-const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-const minute = (time: string) => { const [hour, min] = time.split(":").map(Number); return hour * 60 + min; };
-const clock = (time: string) => new Date(`2000-01-01T${time}:00`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-const countryTime = (provider: Provider) => provider.country === "TH" ? "Bangkok time (UTC+7)" : provider.country === "IN" ? "India time (UTC+5:30)" : "Nepal time (UTC+5:45)";
+import { BookingData } from "./types";
+import { clock, countryTime, days, minute } from "./utils";
 
 export default function BookingTimeZones() {
   const [providerId, setProviderId] = useState(46);
@@ -21,7 +17,6 @@ export default function BookingTimeZones() {
 
   const provider = booking?.providers.find((item) => item.id === providerId) ?? booking?.providers[0];
   const specialist = provider?.specialists.find((item) => item.id === specialistId) ?? provider?.specialists[0];
-
 
   const dates = useMemo(() => Array.from({ length: 7 }, (_, offset) => { const date = new Date(today); date.setDate(date.getDate() + offset); return { offset, date }; }), [today]);
   const slots = useMemo(() => {
