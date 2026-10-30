@@ -4,13 +4,13 @@ A Next.js application for medical service exploration, cart checkout, and appoin
 
 ---
 
-## 🖥️ Node.js Version
+## Node.js Version
 
 This project requires **Node.js v18.18.0 or later** (v20+ recommended).
 
 > Developed and tested with **Node.js v24.21.0**.
 
-You can verify your Node version with:
+Verify your version:
 
 ```bash
 node --version
@@ -18,7 +18,7 @@ node --version
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Install dependencies
 
@@ -32,78 +32,123 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the app.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 3. Other available commands
+### 3. Available commands
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start the development server (with Turbopack) |
+| `npm run dev` | Start the development server (Turbopack) |
 | `npm run build` | Build the app for production |
-| `npm run start` | Start the production server (run after build) |
-| `npm run lint` | Run ESLint to check for code issues |
+| `npm run start` | Start the production server (after build) |
+| `npm run lint` | Run ESLint |
 
 ---
 
-## 📁 Folder Structure
+## Page Routes
+
+These are the navigable pages of the app, accessible from the sticky navbar.
+
+| Route | Page | Description |
+|---|---|---|
+| `/` | Service Explorer | Browse, filter, and search medical services by category, location, and price |
+| `/checkout` | Cart Checkout | View cart items, apply discounts, and proceed to payment |
+| `/booking` | Appointment Booking | Select a provider, pick a date and time slot, and book an appointment |
+
+---
+
+## API Routes
+
+All API routes serve mock JSON data from the `/data` directory.
+
+### Service Explorer — `/api/serviceExplorer`
+
+| Method | Endpoint | Description | Data source |
+|---|---|---|---|
+| GET | `/api/serviceExplorer/categories` | List all service categories | `task1-service-explorer.json` |
+| GET | `/api/serviceExplorer/providers` | List all providers | `task1-service-explorer.json` |
+| GET | `/api/serviceExplorer/services` | List all services | `task1-service-explorer.json` |
+
+### Checkout — `/api/checkout`
+
+| Method | Endpoint | Description | Data source |
+|---|---|---|---|
+| GET | `/api/checkout/catalog` | Full service catalog for cart | `task2-cart.json` |
+| GET | `/api/checkout/guestCart` | Guest (unauthenticated) cart | `task2-cart.json` |
+| GET | `/api/checkout/serverCart` | Server-side cart | `task2-cart.json` |
+
+### Booking — `/api/booking`
+
+| Method | Endpoint | Description | Data source |
+|---|---|---|---|
+| GET | `/api/booking/providers` | Bookable providers | `task3-booking.json` |
+| GET | `/api/booking/bookedSlots` | Already booked time slots | `task3-booking.json` |
+| GET | `/api/booking/closures` | Provider closure periods | `task3-booking.json` |
+
+---
+
+## Folder Structure
 
 ```
 medex_app/
-├── app/                          # Next.js App Router root
-│   ├── layout.tsx                # Root layout (global fonts, metadata)
-│   ├── page.tsx                  # Home page
-│   ├── globals.css               # Global styles (Tailwind CSS)
-│   ├── types.ts                  # Shared TypeScript types
-│   ├── utils.ts                  # Shared utility functions
-│   ├── serviceExplorer.tsx       # Service Explorer component
-│   │
-│   ├── booking/                  # Appointment Booking feature
-│   │   ├── page.tsx              # Booking page
-│   │   ├── bookingTimeZones.tsx  # Time zone UI component
-│   │   ├── booking-time-zones.css
-│   │   ├── types.ts              # Booking-specific types
-│   │   └── utils.ts              # Booking utility functions
-│   │
-│   ├── checkout/                 # Cart & Checkout feature
-│   │   ├── page.tsx              # Checkout page
-│   │   ├── cartCheckout.tsx      # Cart UI component
-│   │   ├── cart-checkout.css
-│   │   ├── types.ts              # Checkout-specific types
-│   │   └── utils.ts              # Checkout utility functions
-│   │
-│   └── api/                      # Next.js API Routes (mock data endpoints)
-│       ├── booking/
-│       │   ├── bookedSlots/route.ts   # GET /api/booking/bookedSlots
-│       │   ├── closures/route.ts      # GET /api/booking/closures
-│       │   └── providers/route.ts     # GET /api/booking/providers
-│       ├── checkout/
-│       │   ├── catalog/route.ts       # GET /api/checkout/catalog
-│       │   ├── guestCart/route.ts     # GET /api/checkout/guestCart
-│       │   └── serverCart/route.ts    # GET /api/checkout/serverCart
-│       └── serviceExplorer/
-│           ├── categories/route.ts    # GET /api/serviceExplorer/categories
-│           ├── providers/route.ts     # GET /api/serviceExplorer/providers
-│           └── services/route.ts      # GET /api/serviceExplorer/services
-│
-├── data/                         # Mock JSON data files
-│   ├── task1-service-explorer.json   # Data for Service Explorer
-│   ├── task2-cart.json               # Data for Cart & Checkout
-│   └── task3-booking.json            # Data for Appointment Booking
-│
-├── public/                       # Static assets (SVGs, images)
-│
-├── utils/
-│   └── urls.js                   # Shared URL constants/helpers
-│
-├── next.config.ts                # Next.js configuration (Turbopack, caching)
-├── tsconfig.json                 # TypeScript configuration
-├── eslint.config.mjs             # ESLint configuration
-└── package.json                  # Project dependencies and scripts
+|-- app/                              # Next.js App Router root
+|   |-- layout.tsx                    # Root layout (fonts, metadata, Navbar)
+|   |-- page.tsx                      # Home page  →  /
+|   |-- globals.css                   # Global styles (Tailwind CSS + navbar)
+|   |-- types.ts                      # Shared TypeScript types
+|   |-- utils.ts                      # Shared utility functions
+|   |-- serviceExplorer.tsx           # Service Explorer UI component
+|   |
+|   |-- booking/                      # Route: /booking
+|   |   |-- page.tsx                  # Booking page entry
+|   |   |-- bookingTimeZones.tsx      # Time zone picker component
+|   |   |-- booking-time-zones.css    # Booking styles
+|   |   |-- types.ts                  # Booking-specific types
+|   |   +-- utils.ts                  # Booking utility functions
+|   |
+|   |-- checkout/                     # Route: /checkout
+|   |   |-- page.tsx                  # Checkout page entry
+|   |   |-- cartCheckout.tsx          # Cart UI component
+|   |   |-- cart-checkout.css         # Checkout styles
+|   |   |-- types.ts                  # Checkout-specific types
+|   |   +-- utils.ts                  # Checkout utility functions
+|   |
+|   +-- api/                          # API Route handlers
+|       |-- booking/
+|       |   |-- bookedSlots/route.ts  # GET /api/booking/bookedSlots
+|       |   |-- closures/route.ts     # GET /api/booking/closures
+|       |   +-- providers/route.ts    # GET /api/booking/providers
+|       |-- checkout/
+|       |   |-- catalog/route.ts      # GET /api/checkout/catalog
+|       |   |-- guestCart/route.ts    # GET /api/checkout/guestCart
+|       |   +-- serverCart/route.ts   # GET /api/checkout/serverCart
+|       +-- serviceExplorer/
+|           |-- categories/route.ts   # GET /api/serviceExplorer/categories
+|           |-- providers/route.ts    # GET /api/serviceExplorer/providers
+|           +-- services/route.ts     # GET /api/serviceExplorer/services
+|
+|-- components/
+|   +-- Navbar.tsx                    # Sticky nav bar (Services / Checkout / Booking)
+|
+|-- data/                             # Mock JSON data files
+|   |-- task1-service-explorer.json   # Data for Service Explorer
+|   |-- task2-cart.json               # Data for Cart & Checkout
+|   +-- task3-booking.json            # Data for Appointment Booking
+|
+|-- public/                           # Static assets (SVGs, images)
+|
+|-- utils/
+|   +-- urls.js                       # Shared URL constants/helpers
+|
+|-- next.config.ts                    # Next.js config (Turbopack, caching)
+|-- tsconfig.json                     # TypeScript configuration
+|-- eslint.config.mjs                 # ESLint configuration
++-- package.json                      # Dependencies and scripts
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Version |
 |---|---|
@@ -115,29 +160,8 @@ medex_app/
 
 ---
 
-## 📡 API Endpoints
+## Deployment
 
-All API routes serve mock data from the `/data` directory.
+The easiest way to deploy is with the [Vercel Platform](https://vercel.com/new).
 
-### Service Explorer
-- `GET /api/serviceExplorer/categories`
-- `GET /api/serviceExplorer/providers`
-- `GET /api/serviceExplorer/services`
-
-### Checkout
-- `GET /api/checkout/catalog`
-- `GET /api/checkout/guestCart`
-- `GET /api/checkout/serverCart`
-
-### Booking
-- `GET /api/booking/bookedSlots`
-- `GET /api/booking/closures`
-- `GET /api/booking/providers`
-
----
-
-## 📦 Deployment
-
-The easiest way to deploy this app is with the [Vercel Platform](https://vercel.com/new).
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
