@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     height: 72px;
-    padding: 0 max(32px, calc((100% - 1180px)/2));
+    padding: 0 max(32px, calc((100% - 1180px) / 2));
     border-bottom: 1px solid #e2e9e8;
     background: #fff
 }
@@ -101,7 +101,7 @@
     font-size: 14px
 }
 
-.cart-title>a {
+.cart-title > a {
     color: #087e7a;
     font-size: 13px;
     font-weight: 700;
@@ -121,7 +121,7 @@
     font-size: 13px
 }
 
-.cart-notice>span {
+.cart-notice > span {
     display: grid;
     place-items: center;
     width: 18px;
@@ -167,7 +167,7 @@
     border-bottom: 1px solid #e5eceb
 }
 
-.group-heading>div {
+.group-heading > div {
     display: flex;
     align-items: center;
     gap: 11px
@@ -185,7 +185,7 @@
     font-size: 11px
 }
 
-.group-heading>span {
+.group-heading > span {
     color: #849299;
     font-size: 11px
 }
@@ -359,7 +359,7 @@
     background: #fcfdfd
 }
 
-.group-footer>div {
+.group-footer > div {
     display: grid;
     gap: 4px;
     color: #72838b;
@@ -371,7 +371,7 @@
     font-size: 13px
 }
 
-.group-footer>button,
+.group-footer > button,
 .summary-checkout {
     border: 0;
     border-radius: 5px;
@@ -382,7 +382,7 @@
     font-weight: 700
 }
 
-.group-footer>button span,
+.group-footer > button span,
 .summary-checkout span {
     margin-left: 7px
 }
@@ -406,7 +406,7 @@
     margin: 25px 0 16px
 }
 
-.summary-rows>div {
+.summary-rows > div {
     display: flex;
     justify-content: space-between;
     gap: 12px;
@@ -470,7 +470,7 @@
     padding: 17px 20px
 }
 
-.guest-note>span {
+.guest-note > span {
     display: grid;
     place-items: center;
     width: 33px;
@@ -507,7 +507,7 @@
     text-align: center
 }
 
-.cart-empty>span {
+.cart-empty > span {
     font-size: 35px;
     color: #168b84
 }
@@ -524,7 +524,7 @@
     font-size: 13px
 }
 
-@media(max-width:800px) {
+@media (max-width: 800px) {
     .cart-layout {
         grid-template-columns: 1fr
     }
@@ -543,7 +543,7 @@
     }
 }
 
-@media(max-width:560px) {
+@media (max-width: 560px) {
     .cart-container {
         width: min(100% - 30px, 1120px)
     }

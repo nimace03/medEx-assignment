@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     height: 68px;
-    padding: 0 max(28px, calc((100% - 1100px)/2));
+    padding: 0 max(28px, calc((100% - 1100px) / 2));
     border-bottom: 1px solid #e1eae8;
     background: #fff
 }
@@ -34,7 +34,7 @@
     font-size: 13px
 }
 
-.booking-header>span {
+.booking-header > span {
     color: #809098;
     font-size: 12px
 }
@@ -185,13 +185,13 @@
     background: #eff9f7
 }
 
-.timezone-card>div {
+.timezone-card > div {
     display: flex;
     align-items: center;
     gap: 11px
 }
 
-.timezone-card>div>span {
+.timezone-card > div > span {
     display: grid;
     place-items: center;
     width: 29px;
@@ -238,7 +238,7 @@
     font-size: 11px
 }
 
-.section-title>button {
+.section-title > button {
     border: 0;
     background: none;
     color: #087e7a;
@@ -366,7 +366,7 @@
     font-weight: 400
 }
 
-.appointment-summary>p {
+.appointment-summary > p {
     margin: 0;
     color: #718188;
     font-size: 12px
@@ -431,7 +431,7 @@
     line-height: 1.4
 }
 
-@media(max-width:750px) {
+@media (max-width: 750px) {
     .booking-layout {
         grid-template-columns: 1fr
     }
@@ -444,12 +444,12 @@
         padding: 0 18px
     }
 
-    .booking-header>span {
+    .booking-header > span {
         display: none
     }
 }
 
-@media(max-width:520px) {
+@media (max-width: 520px) {
     .booking-container {
         width: min(100% - 30px, 1040px)
     }
