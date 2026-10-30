@@ -1,0 +1,489 @@
+.booking-page {
+    min-height: 100vh;
+    background: #f8fbfa;
+    color: #263740
+}
+
+.booking-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    padding: 0 max(28px, calc((100% - 1100px)/2));
+    border-bottom: 1px solid #e1eae8;
+    background: #fff
+}
+
+.booking-brand {
+    color: #087e7a;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.08em;
+    text-decoration: none
+}
+
+.booking-brand span {
+    display: inline-grid;
+    place-items: center;
+    width: 23px;
+    height: 23px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background: #087e7a;
+    color: #fff;
+    font-size: 13px
+}
+
+.booking-header>span {
+    color: #809098;
+    font-size: 12px
+}
+
+.booking-header button {
+    border: 0;
+    background: none;
+    color: #087e7a;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.booking-container {
+    width: min(1040px, calc(100% - 48px));
+    margin: auto;
+    padding: 32px 0 76px
+}
+
+.booking-progress {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    color: #9aa7ad;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.booking-progress span {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ccd9d7;
+    border-radius: 50%;
+    background: #fff
+}
+
+.booking-progress span small {
+    position: absolute;
+    margin-top: 47px;
+    width: 80px;
+    color: #8d999f;
+    font-size: 10px;
+    font-weight: 400
+}
+
+.booking-progress span.is-active {
+    border-color: #087e7a;
+    background: #087e7a;
+    color: #fff
+}
+
+.booking-progress span.is-active small {
+    color: #087e7a;
+    font-weight: 700
+}
+
+.booking-progress i {
+    width: 72px;
+    height: 1px;
+    margin-top: 14px;
+    background: #d8e2e0
+}
+
+.booking-heading {
+    margin: 57px 0 34px;
+    text-align: center
+}
+
+.booking-eyebrow {
+    display: block;
+    color: #188b84;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em
+}
+
+.booking-heading h1 {
+    margin: 9px 0;
+    font-family: Georgia, serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -.04em
+}
+
+.booking-heading p {
+    margin: 0;
+    color: #7b8a92;
+    font-size: 14px
+}
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 285px;
+    gap: 28px;
+    align-items: start
+}
+
+.booking-form {
+    display: grid;
+    gap: 18px
+}
+
+.booking-section,
+.appointment-summary,
+.timezone-card {
+    border: 1px solid #dbe6e4;
+    border-radius: 9px;
+    background: #fff
+}
+
+.booking-section {
+    padding: 22px
+}
+
+.booking-section:first-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px
+}
+
+.booking-section label {
+    display: grid;
+    gap: 8px;
+    color: #42555d;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.booking-section select {
+    border: 1px solid #cbd9d6;
+    border-radius: 5px;
+    background: #fff;
+    padding: 10px;
+    color: #34464d;
+    font-size: 12px;
+    font-weight: 400
+}
+
+.timezone-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 18px;
+    background: #eff9f7
+}
+
+.timezone-card>div {
+    display: flex;
+    align-items: center;
+    gap: 11px
+}
+
+.timezone-card>div>span {
+    display: grid;
+    place-items: center;
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    background: #d6efeb;
+    color: #087e7a
+}
+
+.timezone-card strong {
+    font-size: 12px
+}
+
+.timezone-card p {
+    margin: 3px 0 0;
+    color: #7b8b91;
+    font-size: 10px
+}
+
+.timezone-card button {
+    border: 0;
+    background: none;
+    color: #087e7a;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: start
+}
+
+.section-title h2,
+.appointment-summary h2 {
+    margin: 0;
+    font-size: 16px
+}
+
+.section-title p {
+    margin: 4px 0 0;
+    color: #829198;
+    font-size: 11px
+}
+
+.section-title>button {
+    border: 0;
+    background: none;
+    color: #087e7a;
+    font-size: 23px
+}
+
+.timezone-label {
+    border-radius: 20px;
+    background: #edf5f4;
+    padding: 5px 8px;
+    color: #517672;
+    font-size: 10px
+}
+
+.date-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 18px
+}
+
+.date-button {
+    display: grid;
+    justify-items: center;
+    gap: 3px;
+    border: 1px solid #dce5e3;
+    border-radius: 6px;
+    background: #fff;
+    padding: 9px 3px;
+    color: #78878e;
+    font-size: 10px
+}
+
+.date-button strong {
+    color: #34464e;
+    font-size: 17px
+}
+
+.date-button small {
+    font-size: 10px
+}
+
+.date-button.is-selected {
+    border-color: #087e7a;
+    background: #087e7a;
+    color: #d5f1ec
+}
+
+.date-button.is-selected strong {
+    color: #fff
+}
+
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-top: 18px
+}
+
+.time-grid button {
+    border: 1px solid #cbdedb;
+    border-radius: 5px;
+    background: #fff;
+    padding: 11px 6px;
+    color: #28716d;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.time-grid button:hover,
+.time-grid button.is-selected {
+    border-color: #087e7a;
+    background: #087e7a;
+    color: #fff
+}
+
+.no-slots {
+    margin-top: 18px;
+    border-radius: 6px;
+    background: #f6f8f8;
+    padding: 26px;
+    text-align: center
+}
+
+.no-slots span {
+    color: #7e9094;
+    font-size: 20px
+}
+
+.no-slots strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px
+}
+
+.no-slots p {
+    margin: 4px 0 0;
+    color: #829096;
+    font-size: 11px
+}
+
+.appointment-summary {
+    position: sticky;
+    top: 20px;
+    padding: 22px
+}
+
+.doctor-avatar {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-top: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #abd8d1, #5aa399);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700
+}
+
+.appointment-summary h2 {
+    margin: 12px 0 3px;
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400
+}
+
+.appointment-summary>p {
+    margin: 0;
+    color: #718188;
+    font-size: 12px
+}
+
+.summary-divider {
+    height: 1px;
+    margin: 20px 0;
+    background: #e2eae8
+}
+
+.summary-detail {
+    display: grid;
+    gap: 4px;
+    margin: 14px 0
+}
+
+.summary-detail span {
+    color: #859298;
+    font-size: 10px
+}
+
+.summary-detail strong {
+    font-size: 12px;
+    line-height: 1.35
+}
+
+.continue-booking {
+    width: 100%;
+    margin-top: 17px;
+    border: 0;
+    border-radius: 5px;
+    background: #087e7a;
+    padding: 12px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.continue-booking:disabled {
+    cursor: not-allowed;
+    background: #adc4c2
+}
+
+.continue-booking span {
+    margin-left: 8px
+}
+
+.booking-confirmed {
+    margin-top: 12px;
+    border-radius: 5px;
+    background: #e7f6f2;
+    padding: 9px;
+    color: #16766f;
+    font-size: 11px
+}
+
+.summary-footnote {
+    margin-top: 13px !important;
+    color: #87949a !important;
+    font-size: 10px !important;
+    line-height: 1.4
+}
+
+@media(max-width:750px) {
+    .booking-layout {
+        grid-template-columns: 1fr
+    }
+
+    .appointment-summary {
+        position: static
+    }
+
+    .booking-header {
+        padding: 0 18px
+    }
+
+    .booking-header>span {
+        display: none
+    }
+}
+
+@media(max-width:520px) {
+    .booking-container {
+        width: min(100% - 30px, 1040px)
+    }
+
+    .booking-heading {
+        margin-top: 51px
+    }
+
+    .booking-heading h1 {
+        font-size: 34px
+    }
+
+    .booking-section:first-child {
+        grid-template-columns: 1fr
+    }
+
+    .date-row {
+        gap: 4px
+    }
+
+    .date-button {
+        padding: 8px 1px
+    }
+
+    .time-grid {
+        grid-template-columns: repeat(3, 1fr)
+    }
+
+    .timezone-card {
+        align-items: start;
+        flex-direction: column
+    }
+
+    .booking-progress i {
+        width: 45px
+    }
+}
