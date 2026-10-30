@@ -1,5 +1,7 @@
-import ServiceExplorer from "./serviceExplorer";
+// import ServiceExplorer from "./serviceExplorer";
+import CartCheckout from "./cartCheckout";
 
 export default function Home() {
-  return <ServiceExplorer />;
+  //  return <ServiceExplorer />;
+  return <CartCheckout />;
 }
