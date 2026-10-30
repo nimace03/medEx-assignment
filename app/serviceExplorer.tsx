@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { urls } from "@/utils/urls";
 
 type Category = { id: string; title: string; type: string; status: boolean };
 type Provider = { id: number; name: string; status: string; providerInformation: { city: { name: string }; currency: string; rating: number | null } };
@@ -46,7 +47,7 @@ export default function ServiceExplorer() {
   useEffect(() => {
     let isCurrent = true;
     Promise.all(["categories", "providers", "services"].map(async (resource) => {
-      const response = await fetch(`/api/${resource}`);
+      const response = await fetch(`${urls.serviceExplorer}/${resource}`);
       if (!response.ok) throw new Error(`Unable to load ${resource}`);
       return response.json();
     }))
