@@ -1,9 +1,9 @@
 // import ServiceExplorer from "./serviceExplorer";
 // import CartCheckout from "./cartCheckout";
-import BookingTimeZones from "./bookingTimeZones";
+import ServiceExplorer from "./serviceExplorer";
 
 export default function Home() {
   //  return <ServiceExplorer />;
   // return <CartCheckout />;
-  return <BookingTimeZones />;
+  return <ServiceExplorer />;
 }

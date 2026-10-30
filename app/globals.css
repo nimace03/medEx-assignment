@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "./cart-checkout.css";
-@import "./booking-time-zones.css";
+@import "./checkout/cart-checkout.css";
+@import "./booking/booking-time-zones.css";
 
 :root {
     --ink: #1d2b37;
