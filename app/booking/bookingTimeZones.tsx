@@ -2,12 +2,8 @@
 
 import { urls } from "@/utils/urls";
 import { useEffect, useMemo, useState } from "react";
+import { Provider, BookingData } from "./types";
 
-type Specialist = { id: string; name: string; speciality: string; consultation: { startTime: string; endTime: string; durationInMinutes: number; bufferInMinutes: number } };
-type Provider = { id: number; name: string; country: string; timezone: string; daySchedules: Record<string, { startTime: string; endTime: string }>; specialists: Specialist[] };
-type BookedSlot = { providerId: number; specialistId: string; dayOffset: number; startTime: string };
-type Closure = { providerId: number; dayOffset: number; reason: string };
-type BookingData = { providers: Provider[]; bookedSlots: BookedSlot[]; closures: Closure[] };
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const minute = (time: string) => { const [hour, min] = time.split(":").map(Number); return hour * 60 + min; };
 const clock = (time: string) => new Date(`2000-01-01T${time}:00`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });

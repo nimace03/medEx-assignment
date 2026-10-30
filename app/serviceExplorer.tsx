@@ -2,12 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { urls } from "@/utils/urls";
+import { CatalogData, Service } from "./types";
 
-type Category = { id: string; title: string; type: string; status: boolean };
-type Provider = { id: number; name: string; status: string; providerInformation: { city: { name: string }; currency: string; rating: number | null } };
-type Service = { id: string; title: string; type: string; userId: number; categoryId: string; price: string | null; discount: string | null; discountType: "amount" | "percent" | null; status: boolean; testAtHome: boolean; wellnessPricing: { durationInMinutes: number; price: string; discount: string; discountType: "amount" | "percent" }[] };
-
-type CatalogData = { categories: Category[]; providers: Provider[]; services: Service[] };
 
 const label: Record<string, string> = { package: "Health package", lab_test: "Lab test", service: "Treatment", wellness: "Wellness", insurance: "Insurance" };
 const priceOf = (service: Service) => Number(service.price ?? service.wellnessPricing[0]?.price ?? 0);

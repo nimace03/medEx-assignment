@@ -1,17 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import cartData from "@/data/task2-cart.json";
-
-type Pricing = { id: string; durationInMinutes: number; amount_after_service_charge: number };
-type Product = { id?: string; title?: string; type?: string; currency?: string; providerName?: string; price?: number | null; priceUnknown?: boolean; wellnessPricing?: Pricing[] };
-type Item = { id: string; quantity: number; product: Product };
-type Group = { type: string; items: Item[] };
-type LocalItem = Item & { selectedPricingId?: string };
+import { useMemo, useState, useEffect } from "react";
+import { urls } from "@/utils/urls";
+import { Group, LocalItem } from "./types";
 
 const groupNames: Record<string, string> = { lab_test: "Laboratory tests", wellness: "Wellness appointments", package: "Health packages", service: "Medical services", unknown: "Needs attention" };
 const icons: Record<string, string> = { lab_test: "⌁", wellness: "✦", package: "♡", service: "✚", unknown: "!" };
-const initialGroups = (cartData.serverCart.groups as unknown as Group[]).map((group) => ({ ...group, items: group.items.map((item) => ({ ...item })) }));
 
 const format = (amount: number, currency: string) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(amount);
 const itemPrice = (item: LocalItem) => {
@@ -20,26 +14,46 @@ const itemPrice = (item: LocalItem) => {
 };
 
 export default function CartCheckout() {
-  const [groups, setGroups] = useState(() => initialGroups);
+  const [groups, setGroups] = useState<Group[] | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
+  const [loadError, setLoadError] = useState(false);
 
-  const resolvedGroups = useMemo(() => groups.map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, selectedPricingId: selectedPricing[item.id] })) })), [groups, selectedPricing]);
-  const totalItems = resolvedGroups.reduce((sum, group) => sum + group.items.reduce((count, item) => count + item.quantity, 0), 0);
-  const pricedItems = resolvedGroups.flatMap((group) => group.items).filter((item) => itemPrice(item) !== null);
+  const resolvedGroups = useMemo(() => groups && groups.map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, selectedPricingId: selectedPricing[item.id] })) })) || [], [groups, selectedPricing]);
+  const totalItems = resolvedGroups?.reduce((sum, group) => sum + group.items.reduce((count, item) => count + item.quantity, 0), 0);
+  const pricedItems = resolvedGroups?.flatMap((group) => group.items).filter((item) => itemPrice(item) !== null);
   const totals = pricedItems.reduce<Record<string, number>>((sum, item) => {
     const currency = item.product.currency ?? "THB";
     sum[currency] = (sum[currency] ?? 0) + itemPrice(item)! * item.quantity;
     return sum;
   }, {});
-  const unresolved = resolvedGroups.flatMap((group) => group.items).filter((item) => !item.product.title || itemPrice(item) === null).length;
+  const unresolved = resolvedGroups?.flatMap((group) => group.items).filter((item) => !item.product.title || itemPrice(item) === null).length;
 
-  const updateQuantity = (itemId: string, change: number) => setGroups((current) => current.map((group) => ({ ...group, items: group.items.flatMap((item) => item.id === itemId ? (item.quantity + change < 1 ? [] : [{ ...item, quantity: item.quantity + change }]) : [item]) })).filter((group) => group.items.length));
-  const remove = (itemId: string) => setGroups((current) => current.map((group) => ({ ...group, items: group.items.filter((item) => item.id !== itemId) })).filter((group) => group.items.length));
+  const updateQuantity = (itemId: string, change: number) => setGroups((current) => current && current.map((group) => ({ ...group, items: group.items.flatMap((item) => item.id === itemId ? (item.quantity + change < 1 ? [] : [{ ...item, quantity: item.quantity + change }]) : [item]) })).filter((group) => group.items.length));
+  const remove = (itemId: string) => setGroups((current) => current && current.map((group) => ({ ...group, items: group.items.filter((item) => item.id !== itemId) })).filter((group) => group.items.length));
   const checkout = (group: Group) => {
     const unpriced = group.items.some((item) => !item.product.title || itemPrice({ ...item, selectedPricingId: selectedPricing[item.id] }) === null);
     setMessage(unpriced ? "Choose a price option or remove unavailable items before checkout." : `${groupNames[group.type] ?? "This group"} is ready for checkout.`);
   };
+
+  useEffect(() => {
+    let isCurrent = true;
+    Promise.all(["catalog", "guestCart", "serverCart"].map(async (resource) => {
+      const response = await fetch(`${urls.checkout}/${resource}`);
+      if (!response.ok) throw new Error(`Unable to load ${resource}`);
+      return response.json();
+    }))
+      .then(([catalog, guestCart, serverCart]) => {
+        if (isCurrent) setGroups([...serverCart?.groups]);
+      })
+      .catch(() => {
+        if (isCurrent) setLoadError(true);
+      });
+    return () => { isCurrent = false; };
+  }, []);
+
+  if (!groups && !loadError) return <main className="explorer-shell"><section className="explorer-hero"><div className="explorer-container hero-copy"><span className="eyebrow">MEDICAL SERVICES, MADE SIMPLE</span><h1>Finding the right care for you…</h1></div></section></main>;
+  if (loadError) return <main className="explorer-shell"><section className="explorer-hero"><div className="explorer-container hero-copy"><span className="eyebrow">SERVICE EXPLORER</span><h1>We couldn&apos;t load the service catalog.</h1><button className="popular-searches" onClick={() => window.location.reload()}>Try again</button></div></section></main>;
 
   return <main className="cart-page">
     <header className="cart-header"><a className="brand" href="#top"><span>✚</span> medex</a><nav><a href="#top">Explore services</a><a href="#cart">Help center</a><button aria-label="Account">JD</button></nav></header>
