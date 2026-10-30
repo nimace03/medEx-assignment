@@ -1,0 +1,85 @@
+.medex-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--line, #dfe7e8);
+    box-shadow: 0 1px 6px rgba(8, 126, 122, .07)
+}
+
+.medex-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+    height: 56px
+}
+
+.medex-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -.03em;
+    color: var(--ink, #1d2b37)
+}
+
+.medex-nav-brand-icon {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #087e7a;
+    color: #fff;
+    font-size: 14px
+}
+
+.medex-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.medex-nav-link {
+    display: block;
+    padding: 7px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted, #71808a);
+    transition: background .15s, color .15s
+}
+
+.medex-nav-link:hover {
+    background: var(--mint, #e7f7f4);
+    color: var(--teal, #087e7a)
+}
+
+.medex-nav-link.is-active {
+    background: var(--mint, #e7f7f4);
+    color: var(--teal, #087e7a)
+}
+
+@media (max-width: 480px) {
+    .medex-nav-inner {
+        width: calc(100% - 32px)
+    }
+
+    .medex-nav-brand span:last-child {
+        display: none
+    }
+
+    .medex-nav-link {
+        padding: 7px 10px;
+        font-size: 13px
+    }
+}

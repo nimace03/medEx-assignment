@@ -97,9 +97,6 @@ export default function BookingTimeZones() {
     </main>;
 
     return <main className="booking-page">
-        <header className="booking-header"><a href="#top" className="booking-brand"><span>✚</span>medex</a><span>Secure appointment booking</span>
-            <button>Need help?</button>
-        </header>
         <div id="top" className="booking-container">
             <div className="booking-heading">
                 <span className="booking-eyebrow">BOOK AN APPOINTMENT</span>

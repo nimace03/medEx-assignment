@@ -60,7 +60,7 @@
 .cart-container {
     width: min(1120px, calc(100% - 48px));
     margin: 0 auto;
-    padding: 31px 0 75px
+    padding: 25px 0 75px
 }
 
 .breadcrumbs {

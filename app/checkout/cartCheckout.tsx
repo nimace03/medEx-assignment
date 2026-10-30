@@ -77,11 +77,6 @@ export default function CartCheckout() {
     </main>;
 
     return <main className="cart-page">
-        <header className="cart-header"><a className="brand" href="#top"><span>✚</span> medex</a>
-            <nav><a href="#top">Explore services</a><a href="#cart">Help center</a>
-                <button aria-label="Account">JD</button>
-            </nav>
-        </header>
         <div id="top" className="cart-container">
             <div className="breadcrumbs">Home <span>/</span> Your cart</div>
             <div className="cart-title">
